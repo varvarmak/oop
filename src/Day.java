@@ -1,0 +1,42 @@
+public class Day {
+    private int dayNumber;    // номер дня 1-31
+    private int weekday;      // день недели (0-понедельник, и тд)
+    private Event[] events;   // массив дел на день (48)
+
+    public Day(int dayNumber, int weekday) {
+        this.dayNumber = dayNumber;
+        this.weekday = weekday;
+        this.events = new Event[24];
+    }
+
+    public void addEvent(String time, String title, String comm) {
+        // время в номер часа
+        int hour = Integer.parseInt(time.split(":")[0]);
+        int minute = Integer.parseInt(time.split(":")[1]);
+        if ((hour < 0 || hour > 23)||(minute < 0 || minute > 59)) {
+            throw new IllegalArgumentException("неверное время: " + time);
+        }
+
+        events[hour] = new Event(time, title, comm);
+    }
+
+    public String getWeekdayName() {
+        String[] weekdays = {"понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"};
+        return weekdays[weekday];
+    }
+
+    public int getEventsCount() {
+        int count = 0;
+        for (Event event : events) {
+            if (event != null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public String messageDay() {
+        return "День " + dayNumber + " (" + getWeekdayName() + "), дел: " + getEventsCount();
+    }
+
+}

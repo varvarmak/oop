@@ -35,7 +35,7 @@ public class Event {
     }
 
     //объединила в одно, то пока оставим, пусть будет
-    public String massage() {
+    public String massageEvent() {
         return time + " - " + title + " (" + comm + ")";
     }
 
