@@ -1,11 +1,11 @@
 public class Day {
     private int dayNumber;    // номер дня 1-31
-    private int weekday;      // день недели (0-понедельник, и тд)
+    //private int weekday;      // день недели (0-понедельник, и тд)
     private Event[] events;   // массив дел на день (48)
 
-    public Day(int dayNumber, int weekday) {
+    public Day(int dayNumber) {
         this.dayNumber = dayNumber;
-        this.weekday = weekday;
+        //this.weekday = weekday;
         this.events = new Event[24];
     }
 
@@ -19,10 +19,20 @@ public class Day {
 
         events[hour] = new Event(time, title, comm);
     }
+    public int getDayNumber() { return dayNumber; }
 
-    public String getWeekdayName() {
-        String[] weekdays = {"понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"};
-        return weekdays[weekday];
+    // НОВЫЙ МЕТОД: получить массив событий
+    public Event[] getEvents() {
+        return events;
+    }
+//    public String getWeekdayName() {
+//        String[] weekdays = {"понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"};
+//        return weekdays[weekday];
+//    }
+
+    public Event getEvent(String time) {
+        int hour = Integer.parseInt(time.split(":")[0]);
+        return events[hour];
     }
 
     public int getEventsCount() {
@@ -36,7 +46,7 @@ public class Day {
     }
 
     public String messageDay() {
-        return "День " + dayNumber + " (" + getWeekdayName() + "), дел: " + getEventsCount();
+        return "День " + dayNumber + ", дел: " + getEventsCount();
     }
 
 }
