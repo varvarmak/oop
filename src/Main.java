@@ -1,6 +1,6 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+
 import java.util.Scanner;
 public class Main {
     private User currentUser;
@@ -27,7 +27,7 @@ public class Main {
             System.out.println("\n=== ГЛАВНОЕ МЕНЮ ===");
             System.out.println("1. Добавить дело");
             System.out.println("2. Посмотреть дела");
-            System.out.println("3. Статистика");
+            System.out.println("3. Статистика (так себе работает)");
             System.out.println("4. Выйти");
             System.out.print("Выбери действие: ");
 
@@ -134,4 +134,4 @@ public class Main {
     }
 
 }
-}
+
