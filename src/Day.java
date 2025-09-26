@@ -48,5 +48,15 @@ public class Day {
     public String messageDay() {
         return "День " + dayNumber + ", дел: " + getEventsCount();
     }
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(messageDay()).append("\n");
 
+    for (Event e : events) {
+        if (e != null) {
+            sb.append(" ").append(e.massageEvent()).append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }
