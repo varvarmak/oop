@@ -1,5 +1,5 @@
 import java.util.HashMap;
-
+import java.util.Map;
 public class Month {
     private int monthNumber;          // номер месяца (1-12)
     private int daysInMonth;          // количество дней в месяце
@@ -29,31 +29,31 @@ public class Month {
             throw new IllegalArgumentException("Неверный номер дня: " + dayNumber);
         }
 
-        if (!days.contaunsKey(dayNumber)) {
+        if (!days.containsKey(dayNumber)) {
             days.put(dayNumber, new Day(dayNumber));
         }
         return days.get(dayNumber);
     }
     public void addEvent(int dayNumber, String time, String title, String comm) {
-        Day day = detDay(dayNumber);
+        Day day = getDay(dayNumber);
         day.addEvent(time, title, comm);
     }
     
     public int getTotalEvents() {
         int total = 0;
-        for (Day : days.values()) {
-            total += d.getEventCount();
+        for (Day d : days.values()) {
+            total += d.getEventsCount();
         }
         return total;
     }
 
    public void showAllTasks() {
        if (days.isEmpty()) {
-           System.out.println("нет дел в " + detMonthName());
+           System.out.println("нет дел в " + getMonthName());
            return;
 }
-       for (int dayNumber : days.keysSet()) {
-           Day d = days.det(dayNumber);
+       for (int dayNumber : days.keySet()) {
+           Day d = days.get(dayNumber);
            System.out.println("день " + dayNumber + ":");
            System.out.println(d.toString());
        }
