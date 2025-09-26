@@ -1,7 +1,9 @@
+import java.util.HashMap;
+
 public class Month {
     private int monthNumber;          // номер месяца (1-12)
     private int daysInMonth;          // количество дней в месяце
-    private Day[] days;
+    private Map<Integer, Day> days;
 
     private static final int[] DAYS_IN_MONTH = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -14,7 +16,7 @@ public class Month {
 
         this.monthNumber = monthNumber;
         this.daysInMonth = DAYS_IN_MONTH[monthNumber];
-        this.days = new Day[daysInMonth + 1];
+        this.days = new HashMap<>(); // пустой словарь
     }
 
     public int getMonthNumber() { return monthNumber; }
@@ -27,23 +29,20 @@ public class Month {
             throw new IllegalArgumentException("Неверный номер дня: " + dayNumber);
         }
 
-        if (days[dayNumber] == null) {
-            days[dayNumber] = new Day(dayNumber);
+        if (!days.contaunsKey(dayNumber)) {
+            days.put(dayNumber, new Day(dayNumber));
         }
-        return days[dayNumber];
+        return days.get(dayNumber);
     }
-    public static String getMonthName(int monthNumber) {
-        if (monthNumber < 1 || monthNumber > 12) {
-            throw new IllegalArgumentException("Неверный номер месяца: " + monthNumber);
-        }
-        return MONTH_NAMES[monthNumber];
+    public void addEvent(int dayNumber, String time, String title, String comm) {
+        Day day = detDay(dayNumber);
+        day.addEvent(time, title, comm);
     }
+    
     public int getTotalEvents() {
         int total = 0;
-        for (int i = 1; i <= daysInMonth; i++) {
-            if (days[i] != null) {
-                total += days[i].getEventsCount();
-            }
+        for (Day : days.values()) {
+            total += d.getEventCount();
         }
         return total;
     }
