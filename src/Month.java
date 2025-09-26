@@ -47,9 +47,21 @@ public class Month {
         return total;
     }
 
-    public void addEvent(int dayNumber, String time, String title, String comm) {
-        Day day = getDay(dayNumber);
-        day.addEvent(time, title, comm);
+   public void showAllTasks() {
+       if (days.isEmpty()) {
+           System.out.println("нет дел в " + detMonthName());
+           return;
+}
+       for (int dayNumber : days.keysSet()) {
+           Day d = days.det(dayNumber);
+           System.out.println("день " + dayNumber + ":");
+           System.out.println(d.toString());
+       }
+   }
+    public static String getMonthName(int monthNumber) {
+        if (monthNumber < 1 || monthNumber > 12) {
+            throw new IllegalArgumentException("неверный номер месяца: " + monthNumber);
+        }
+        return MONTH_NAMES[monthNumber];
     }
-
 }
