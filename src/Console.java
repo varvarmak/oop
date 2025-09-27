@@ -4,14 +4,13 @@ import java.util.Scanner;
 
 public class Console {
 
-    private Map<Integer, User> users = new HashMap<>(); // айди
+    private Map<Integer, User> users = new HashMap<>(); // список пользователей по id
     private User currentUser;
     private Scanner scanner = new Scanner(System.in);
-    private int nextUserId = 1;
+    private int nextUserId = 1; // счетчик id
 
     public void start() {
         System.out.println("=== ПЛАНИРОВЩИК ДЕЛ ===");
-
         authenticateUser();
         showMainMenu();
     }
@@ -20,7 +19,6 @@ public class Console {
         System.out.print("Введите имя пользователя: ");
         String name = scanner.nextLine();
 
-
         currentUser = null;
         for (User user : users.values()) {
             if (user.getName().equals(name)) {
@@ -28,7 +26,6 @@ public class Console {
                 break;
             }
         }
-
 
         if (currentUser == null) {
             currentUser = new User(nextUserId++, name);
@@ -67,17 +64,78 @@ public class Console {
     }
 
     private void addEvent() {
-        System.out.println("Добавление дела для пользователя " + currentUser.getName());
+        System.out.println("\n--- ДОБАВЛЕНИЕ ДЕЛА ---");
 
+        try {
+            System.out.print("Год (2025-2125): ");
+            int year = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Месяц (1-12): ");
+            int month = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("День: ");
+            int day = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Время (например, 14:30): ");
+            String time = scanner.nextLine();
+
+            System.out.print("Название дела: ");
+            String title = scanner.nextLine();
+
+            System.out.print("Описание: ");
+            String description = scanner.nextLine();
+
+            // Получаем нужный день через цепочку
+            Year yearObj = currentUser.getYear(year);
+            Month monthObj = yearObj.getMonth(month);
+            Day dayObj = monthObj.getDay(day);
+
+            // Добавляем дело
+            dayObj.addEvent(time, title, description);
+
+            System.out.println("✅ Дело добавлено!");
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 
     private void viewEvents() {
-        System.out.println("Просмотр дел пользователя " + currentUser.getName());
+        System.out.println("\n--- ПРОСМОТР ДЕЛ ---");
 
+        try {
+            System.out.print("Год: ");
+            int year = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Месяц (1-12): ");
+            int month = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("День: ");
+            int day = Integer.parseInt(scanner.nextLine());
+
+            // Получаем нужный день
+            Year yearObj = currentUser.getYear(year);
+            Month monthObj = yearObj.getMonth(month);
+            Day dayObj = monthObj.getDay(day);
+
+            // Показываем дела
+            System.out.println("\nДела на " + day + "." + month + "." + year + ":");
+            System.out.println("Всего дел: " + dayObj.getEventsCount());
+
+            Event[] events = dayObj.getEvents();
+            for (Event event : events) {
+                if (event != null) {
+                    System.out.println(event.getTime() + " - " + event.getTitle() + " (" + event.getComm() + ")");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 
     private void showStatistics() {
-        System.out.println("Статистика пользователя " + currentUser.getName());
+        System.out.println("\n--- СТАТИСТИКА ---");
+        System.out.println("Пользователь: " + currentUser.getName());
         System.out.println("Всего дел: " + currentUser.getTotalEvents());
     }
 
